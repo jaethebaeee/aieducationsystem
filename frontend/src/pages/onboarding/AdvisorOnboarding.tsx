@@ -308,7 +308,7 @@ const AdvisorOnboarding: React.FC = () => {
                   <input type="checkbox" className="accent-blue-600" checked={!!answers.parentUpdates?.enabled} onChange={(e)=>setAnswer('parentUpdates', { ...(answers.parentUpdates||{ enabled:false, contact:'' }), enabled: e.target.checked })} /> Parent updates
                 </label>
                 {answers.parentUpdates?.enabled && (
-                  <input className={`md:col-span-2 ${inputBase}`} placeholder="Parent Kakao/phone" value={answers.parentUpdates?.contact || ''} onChange={(e)=>setAnswer('parentUpdates', { ...(answers.parentUpdates||{ enabled:true, contact:'' }), contact: e.target.value })} />
+                  <input className={`md:col-span-2 ${inputBase}`} placeholder="Parent phone (optional)" value={answers.parentUpdates?.contact || ''} onChange={(e)=>setAnswer('parentUpdates', { ...(answers.parentUpdates||{ enabled:true, contact:'' }), contact: e.target.value })} />
                 )}
 
                 <div className="md:col-span-3">

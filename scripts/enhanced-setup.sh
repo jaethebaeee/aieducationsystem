@@ -770,7 +770,7 @@ print_header "Phase 6: Marketing Integration"
 
 print_status "Setting up marketing components..."
 
-# KakaoTalk Marketing
+# Marketing
 cat > src/services/marketing.js << 'EOF'
 // Marketing Services
 const MarketingService = {
@@ -792,28 +792,10 @@ const MarketingService = {
     
     const tip = tips[Math.floor(Math.random() * tips.length)];
     
-    // Send to KakaoTalk channel
-    await this.sendKakaoMessage(tip.ko);
-    
     // Send to email subscribers
     await this.sendEmailTip(tip);
     
     return tip;
-  },
-  
-  async sendKakaoMessage(message) {
-    // KakaoTalk API integration
-    try {
-      const response = await fetch('/api/marketing/kakao/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message })
-      });
-      
-      return response.json();
-    } catch (error) {
-      console.error('KakaoTalk message failed:', error);
-    }
   },
   
   async sendEmailTip(tip) {

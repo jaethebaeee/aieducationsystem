@@ -163,7 +163,7 @@ model Subscription {
   startDate DateTime
   endDate   DateTime?
   stripeSubscriptionId String? // Stripe subscription ID
-  kakaoPaySubscriptionId String? // Kakao Pay subscription ID
+  // Removed Kakao Pay support
   
   // Payment method
   paymentMethod PaymentMethod?
@@ -186,7 +186,7 @@ model PaymentOrder {
   planType      String
   amount        Int
   currency      String @default("USD")
-  paymentMethod String // "STRIPE" or "KAKAO"
+  paymentMethod String // "STRIPE"
   status        String @default("PENDING") // "PENDING", "COMPLETED", "FAILED", "CANCELLED"
   metadata      String // JSON string for additional data
   
