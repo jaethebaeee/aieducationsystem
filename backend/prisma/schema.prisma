@@ -783,3 +783,32 @@ model TimelineTask {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 } 
+
+// Organization (for courses and multi-tenant grouping)
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  courses   Course[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("organizations")
+}
+
+// Course belonging to an organization
+model Course {
+  id          String       @id @default(cuid())
+  orgId       String
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  title       String
+  code        String
+  description String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([orgId, code])
+  @@map("courses")
+}
