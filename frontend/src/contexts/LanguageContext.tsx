@@ -27,7 +27,11 @@ interface LanguageProviderProps {
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const { i18n, t } = useTranslation();
-  const [language, setLanguageState] = useState(i18n.language || 'en');
+  const [language, setLanguageState] = useState(() => {
+    const saved = localStorage.getItem('preferred-language');
+    if (saved === 'ko' || saved === 'en') return saved;
+    return i18n.language || (navigator.language.startsWith('ko') ? 'ko' : 'en');
+  });
 
   const setLanguage = useCallback((lang: string) => {
     setLanguageState(lang);

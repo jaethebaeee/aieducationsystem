@@ -8,9 +8,10 @@ const ScaleFooter: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-text-secondary text-sm">© {new Date().getFullYear()} AdmitAI Korea — Evidence‑driven admissions optimizer</p>
           <div className="flex items-center gap-3 text-xs text-text-muted">
-            <Link to="/about" className="hover:text-white">Methodology</Link>
-            <Link to="/about#privacy" className="hover:text-white">Privacy</Link>
-            <Link to="/about#terms" className="hover:text-white">Terms</Link>
+            <Link to="/methodology" className="hover:text-white">Methodology</Link>
+            <Link to="/privacy" className="hover:text-white">Privacy</Link>
+            <Link to="/terms" className="hover:text-white">Terms</Link>
+            <Link to="/cookies" className="hover:text-white">Cookies</Link>
           </div>
         </div>
       </div>

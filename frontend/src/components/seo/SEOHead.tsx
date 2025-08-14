@@ -83,6 +83,8 @@ const SEOHead: React.FC<SEOHeadProps> = ({
 
   return (
     <Helmet>
+      {/* Viewport */}
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       {/* Primary Meta Tags */}
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />

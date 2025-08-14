@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckCircleIcon, XCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
-interface AgenticSeekStatus {
+interface AgenticSeekStatusData {
   agenticSeek: {
     enabled: boolean;
     healthy: boolean;
@@ -22,7 +22,7 @@ interface AgenticSeekStatus {
 
 const AgenticSeekStatus: React.FC = () => {
   const { t } = useTranslation();
-  const [status, setStatus] = useState<AgenticSeekStatus | null>(null);
+  const [status, setStatus] = useState<AgenticSeekStatusData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

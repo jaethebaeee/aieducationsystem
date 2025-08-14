@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 function setCookie(name: string, value: string, days: number): void {
   const date = new Date();
