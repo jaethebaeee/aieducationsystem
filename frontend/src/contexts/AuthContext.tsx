@@ -7,6 +7,10 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   isLoading: boolean; // Added for compatibility
+  isOwner?: boolean;
+  isAdmin?: boolean;
+  isInstructor?: boolean;
+  isMember?: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (userData: {
     email: string;
@@ -137,6 +141,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     loading,
     isLoading: loading, // Alias for compatibility
+    isOwner: (user?.role || '').toString().toLowerCase() === 'owner',
+    isAdmin: ['admin','owner'].includes((user?.role || '').toString().toLowerCase()),
+    isInstructor: ['instructor','admin','owner','mentor'].includes((user?.role || '').toString().toLowerCase()),
+    isMember: !!user,
     login,
     register,
     updateProfile,

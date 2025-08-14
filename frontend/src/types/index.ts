@@ -14,7 +14,8 @@ export interface User {
   updatedAt: string;
 }
 
-export type UserRole = 'student' | 'parent' | 'mentor' | 'admin';
+// Legacy roles kept for compatibility; new canonical roles are OWNER/ADMIN/INSTRUCTOR/MEMBER
+export type UserRole = 'student' | 'parent' | 'mentor' | 'admin' | 'owner' | 'instructor' | 'member';
 
 export interface UserProfile {
   avatar?: string;

@@ -80,7 +80,36 @@ export const requireRole = (roles: string[]) => {
       });
     }
 
-    if (!roles.includes(req.user.role)) {
+    // Role mapping: support legacy roles (STUDENT/PARENT/MENTOR/ADMIN)
+    // and new roles (MEMBER/INSTRUCTOR/ADMIN/OWNER)
+    const role = String(req.user.role).toUpperCase();
+    // Normalize legacy to new ladder
+    const legacyToNew: Record<string, 'OWNER' | 'ADMIN' | 'INSTRUCTOR' | 'MEMBER'> = {
+      ADMIN: 'ADMIN',
+      MENTOR: 'INSTRUCTOR',
+      STUDENT: 'MEMBER',
+      PARENT: 'MEMBER',
+    };
+    const normalized = (['OWNER','ADMIN','INSTRUCTOR','MEMBER'].includes(role)
+      ? (role as 'OWNER'|'ADMIN'|'INSTRUCTOR'|'MEMBER')
+      : legacyToNew[role]) || 'MEMBER';
+    // Permission ladder: OWNER > ADMIN > INSTRUCTOR > MEMBER
+    const rank: Record<'OWNER'|'ADMIN'|'INSTRUCTOR'|'MEMBER', number> = {
+      OWNER: 4,
+      ADMIN: 3,
+      INSTRUCTOR: 2,
+      MEMBER: 1,
+    };
+    // Accept both explicit roles and ladder checks when roles include one of the ladder tokens
+    const allowed = roles.some((r) => {
+      const R = String(r).toUpperCase();
+      if (['OWNER','ADMIN','INSTRUCTOR','MEMBER'].includes(R)) {
+        return rank[normalized] >= rank[R as keyof typeof rank];
+      }
+      // Fallback: check legacy direct match for backwards compatibility
+      return role === R;
+    });
+    if (!allowed) {
       return res.status(403).json({
         success: false,
         message: 'Insufficient permissions',
@@ -96,3 +125,7 @@ export const requireStudent = requireRole(['STUDENT']);
 export const requireParent = requireRole(['PARENT']);
 export const requireMentor = requireRole(['MENTOR']);
 export const requireAdmin = requireRole(['ADMIN']); 
+// New role gates
+export const requireMember = requireRole(['MEMBER']);
+export const requireInstructor = requireRole(['INSTRUCTOR']);
+export const requireOwner = requireRole(['OWNER']);

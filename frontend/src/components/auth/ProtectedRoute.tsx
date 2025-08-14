@@ -4,10 +4,13 @@ import { useAuth } from '../../contexts/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: string[];
+  allowedRoles?: string[]; // legacy
+  minRole?: 'MEMBER' | 'INSTRUCTOR' | 'ADMIN' | 'OWNER';
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
+const rank = { MEMBER: 1, INSTRUCTOR: 2, ADMIN: 3, OWNER: 4 } as const;
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles, minRole = 'MEMBER' }) => {
   const { user, isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
@@ -22,8 +25,24 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     return <Navigate to="/login" replace />;
   }
 
-  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/dashboard" replace />;
+  if (user) {
+    const raw = (user.role || '').toString().toUpperCase();
+    const legacyToNew: Record<string, keyof typeof rank> = {
+      ADMIN: 'ADMIN',
+      MENTOR: 'INSTRUCTOR',
+      STUDENT: 'MEMBER',
+      PARENT: 'MEMBER',
+      OWNER: 'OWNER',
+      INSTRUCTOR: 'INSTRUCTOR',
+      MEMBER: 'MEMBER',
+    };
+    const normalized = (rank[raw as keyof typeof rank] ? (raw as keyof typeof rank) : legacyToNew[raw]) || 'MEMBER';
+    if (rank[normalized] < rank[minRole]) {
+      return <Navigate to="/dashboard" replace />;
+    }
+    if (allowedRoles && !allowedRoles.includes(user.role)) {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return <>{children}</>;
