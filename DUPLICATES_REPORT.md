@@ -52,7 +52,6 @@ Generated: 2025-08-14 09:53:59
 - backend/prisma/migrations/20250713024539_add_university_weather_system/migration.sql
 - backend/prisma/migrations/20250713035013_remove_weather_system/migration.sql
 - backend/prisma/migrations/20250714151254_add_stripe_subscription_id/migration.sql
-- backend/prisma/migrations/20250714154650_add_payment_order_and_kakao_pay/migration.sql
 - backend/prisma/migrations/20250716152942_add_storytelling_coach_relations/migration.sql
 - backend/prisma/migrations/20250716154642_add_application_timeline_relation/migration.sql
 - backend/prisma/migrations/20250810071625_add_quick_setup_prep_careers/migration.sql

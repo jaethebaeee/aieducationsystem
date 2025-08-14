@@ -238,16 +238,15 @@ const badges = {
 
 ### **1. Korean Social Media Integration**
 ```javascript
-const KakaoTalkMarketing = {
+const SocialMarketing = {
   async sendDailyTip() {
     const tips = [
       '오늘의 팁: 에세이에서 한국 문화를 어떻게 표현할까요?',
       'Tip of the day: How to weave Korean culture into your essay',
       '오늘의 팁: 문법 실수를 줄이는 방법'
     ];
-    
     const tip = tips[Math.floor(Math.random() * tips.length)];
-    await this.sendKakaoMessage(tip);
+    await this.sendEmailTip(tip);
   }
 };
 ```

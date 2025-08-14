@@ -193,7 +193,7 @@ python3 grammarService.py 5001
 
 ### **Social Media:**
 1. **Korean Student Platforms**: Instagram, TikTok, YouTube
-2. **Korean Parent Groups**: Facebook, KakaoTalk
+2. **Korean Parent Groups**: Facebook groups
 3. **Korean Education Communities**: LinkedIn, professional networks
 4. **Korean Media**: Press releases and interviews
 

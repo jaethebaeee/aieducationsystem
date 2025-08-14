@@ -512,22 +512,15 @@ const GamificationSystem = {
 
 ### **1. Korean Social Media Integration**
 ```javascript
-// KakaoTalk Channel Integration
-const KakaoTalkMarketing = {
-  async createChannel() {
-    const channel = {
+// Email + Social (non-Kakao) Integration
+const SocialMarketing = {
+  async createCampaign() {
+    const campaign = {
       name: 'AdmitAI Korea - 미국 대학 입학 도우미',
       description: 'AI 기반 에세이 분석으로 미국 대학 입학을 준비하세요',
-      category: 'education',
-      features: [
-        'Free essay tips daily',
-        'Weekly Q&A sessions',
-        'Success story sharing',
-        'Direct link to platform'
-      ]
+      channels: ['email','instagram','youtube']
     };
-    
-    return channel;
+    return campaign;
   },
   
   async sendDailyTip() {
@@ -537,10 +530,8 @@ const KakaoTalkMarketing = {
       '오늘의 팁: 문법 실수를 줄이는 방법',
       'Tip of the day: Common ESL mistakes to avoid'
     ];
-    
     const tip = tips[Math.floor(Math.random() * tips.length)];
-    
-    await this.sendChannelMessage(tip);
+    await this.sendEmailTip(tip);
   }
 };
 ```

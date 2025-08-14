@@ -826,7 +826,7 @@ print_header "Phase 7: Environment Configuration"
 
 print_status "Creating environment configuration..."
 
-# Enhanced Environment Variables
+# Enhanced Environment Variables (Kakao removed)
 cat > .env.enhanced << 'EOF'
 # AI API Keys
 OPENAI_API_KEY=your-openai-api-key-here
@@ -848,7 +848,6 @@ STRIPE_SECRET_KEY=your-stripe-secret-key-here
 STRIPE_PUBLISHABLE_KEY=your-stripe-publishable-key-here
 
 # Marketing Configuration
-KAKAO_API_KEY=your-kakao-api-key-here
 EMAIL_SERVICE_API_KEY=your-email-service-api-key-here
 
 # Testing Configuration
@@ -1040,7 +1039,7 @@ echo "  ✅ Enhanced AI integration (Grammarly + GPT-4o)"
 echo "  ✅ Cultural storytelling module"
 echo "  ✅ Automated testing (Testim + Accessibility)"
 echo "  ✅ Business model (Freemium + Gamification)"
-echo "  ✅ Marketing integration (KakaoTalk + Email)"
+echo "  ✅ Marketing integration (Email)"
 echo "  ✅ Environment configuration"
 echo ""
 echo -e "${CYAN}🚀 Next Steps:${NC}"
