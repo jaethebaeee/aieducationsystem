@@ -1,0 +1,111 @@
+/* Scale AI Global Styles */
+:root {
+  --brand-bg: #0b0d14;
+  --brand-surface: #0e1016;
+  --brand-card: #111421;
+  --brand-border: rgba(255,255,255,0.08);
+  --brand-muted: rgba(255,255,255,0.6);
+  --brand-text: #e6e8ef;
+  --brand-indigo: #4f46e5;
+  --brand-indigo-500: #6366f1;
+  --brand-indigo-400: #818cf8;
+  --brand-purple: #8b5cf6;
+}
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Global font family */
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* Body background for Scale AI theme */
+body {
+  background-color: var(--brand-bg);
+  color: var(--brand-text);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove default styles */
+* {
+  box-sizing: border-box;
+}
+
+/* Scale AI button hover effects */
+.scale-button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scale-button:hover {
+  transform: translateY(-1px);
+}
+
+/* Gradient text utilities */
+.gradient-text-purple {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2f3f;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
+/* Selection color */
+::selection { background: var(--brand-indigo-500); color: white; }
+::-moz-selection { background: var(--brand-indigo-500); color: white; }
+
+/* Focus states */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--brand-indigo-400);
+  outline-offset: 2px;
+}
+
+/* Disable outline for mouse users */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Loading animation for gradients */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}

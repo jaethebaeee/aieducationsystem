@@ -1,0 +1,52 @@
+{
+  "name": "admitai-korea",
+  "version": "1.0.0",
+  "description": "AI-powered college admissions platform for Korean students applying to U.S. universities",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "./scripts/dev-workflow.sh dev",
+    "start": "./scripts/dev-workflow.sh dev",
+    "install:all": "./scripts/dev-workflow.sh install",
+    "setup": "./scripts/dev-workflow.sh setup-db",
+    "test": "./scripts/dev-workflow.sh test",
+    "lint": "./scripts/dev-workflow.sh lint",
+    "build": "./scripts/dev-workflow.sh build",
+    "studio": "./scripts/dev-workflow.sh studio",
+    "reset-db": "./scripts/dev-workflow.sh reset-db",
+    "logs": "./scripts/dev-workflow.sh logs",
+    "check": "./scripts/dev-workflow.sh check",
+    "docker:dev": "docker-compose up -d",
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
+    "docker:down": "docker-compose down",
+    "deploy": "./deploy.sh",
+    "setup:full": "chmod +x setup.sh && ./setup.sh"
+  },
+  "keywords": [
+    "education",
+    "ai",
+    "college-admissions",
+    "essay-writing",
+    "korean-students",
+    "react",
+    "express",
+    "typescript"
+  ],
+  "author": "AdmitAI Korea Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/admitai-korea.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/admitai-korea/issues"
+  },
+  "homepage": "https://github.com/your-org/admitai-korea#readme"
+} 

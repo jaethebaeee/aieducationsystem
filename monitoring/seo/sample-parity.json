@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2025-08-12T00:00:00.000Z",
+  "pages": [
+    {"path": "/", "google": {"impressions": 12000, "clicks": 950, "ctr": 7.9}, "bing": {"impressions": 2100, "clicks": 110, "ctr": 5.2}, "naver": {"impressions": 5800, "clicks": 320, "ctr": 5.5}},
+    {"path": "/pricing", "google": {"impressions": 4200, "clicks": 240, "ctr": 5.7}, "bing": {"impressions": 760, "clicks": 40, "ctr": 5.3}, "naver": {"impressions": 2100, "clicks": 125, "ctr": 6.0}},
+    {"path": "/about", "google": {"impressions": 1700, "clicks": 85, "ctr": 5.0}, "bing": {"impressions": 310, "clicks": 14, "ctr": 4.5}, "naver": {"impressions": 900, "clicks": 48, "ctr": 5.3}}
+  ],
+  "parityThresholds": {
+    "naverToGoogleImpressions": 0.6,
+    "naverToGoogleClicks": 0.6,
+    "bingToGoogleImpressions": 0.15,
+    "bingToGoogleClicks": 0.15
+  }
+}
+

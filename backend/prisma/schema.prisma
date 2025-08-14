@@ -1,0 +1,785 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      String   @default("STUDENT") // Using String instead of enum for SQLite
+  language  String   @default("KO") // Using String instead of enum for SQLite
+  avatar    String?
+  bio       String?
+  
+  // Profile
+  profile UserProfile?
+  
+  // Subscription
+  subscription Subscription?
+  
+  // Essays
+  essays Essay[]
+  
+  // Community
+  posts    CommunityPost[]
+  comments CommunityComment[]
+  
+  // Mentorship
+  mentorProfile MentorProfile?
+  students      User[] @relation("MentorStudents")
+  mentor        User?  @relation("MentorStudents", fields: [mentorId], references: [id])
+  mentorId      String?
+  
+  // Analytics
+  analytics UserAnalytics?
+  
+  // Payment Orders
+  paymentOrders PaymentOrder[]
+
+  // Storytelling Coach
+  storyBlocks StoryBlock[]
+  storyDrafts StoryDraft[]
+  applicationTimelines ApplicationTimeline[]
+  prepProgress        PrepItemProgress[]
+  careersApplications CareersApplication[]
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("users")
+}
+
+// User profile
+model UserProfile {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Academic background
+  gpa           Float?
+  satScore      Int?
+  actScore      Int?
+  toeflScore    Int?
+  ieltsScore    Int?
+  schoolName    String?
+  graduationYear Int?
+  
+  // Target schools
+  targetSchools String // JSON string of school names
+  
+  // Extracurriculars
+  extracurriculars Extracurricular[]
+  
+  // Preferences
+  preferences UserPreferences?
+
+  // Quick Setup fields
+  curriculum            String?
+  gpaType               String?
+  classRankPercentile   Int?
+  awards                String?
+  citizenship           String?
+  visaStatus            String?
+  edRiskTolerance       String?
+  campusSize            String?
+  campusSetting         String?
+  climatePreference     String?
+  identityThemes        String?   // JSON string array
+  weeklyEssayHours      Int?
+  applicationPlatforms  String?   // JSON string array
+  languagePreference    String?
+  parentUpdates         String?   // JSON { enabled:boolean, contact?:string }
+  consentDataUse        Boolean?  @default(false)
+  alertsDeadlines       Boolean?  @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("user_profiles")
+}
+
+// Extracurricular activities
+model Extracurricular {
+  id          String      @id @default(cuid())
+  profileId   String
+  profile     UserProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  name        String
+  description String
+  role        String
+  duration    String
+  impact      String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("extracurriculars")
+}
+
+// User preferences
+model UserPreferences {
+  id        String @id @default(cuid())
+  profileId String @unique
+  profile   UserProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  
+  // Notification settings
+  emailNotifications Boolean @default(true)
+  pushNotifications  Boolean @default(true)
+  smsNotifications   Boolean @default(false)
+  notificationFrequency String @default("IMMEDIATE") // Using String instead of enum
+  
+  // Privacy settings
+  profileVisibility String @default("PRIVATE") // Using String instead of enum
+  essaySharing      Boolean @default(false)
+  analyticsSharing  Boolean @default(true)
+  
+  // Essay goals
+  essayGoals String // JSON string of goals
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("user_preferences")
+}
+
+// Subscription model
+model Subscription {
+  id        String            @id @default(cuid())
+  userId    String            @unique
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan      String            @default("FREE") // Using String instead of enum
+  status    String            @default("ACTIVE") // Using String instead of enum
+  startDate DateTime
+  endDate   DateTime?
+  stripeSubscriptionId String? // Stripe subscription ID
+  kakaoPaySubscriptionId String? // Kakao Pay subscription ID
+  
+  // Payment method
+  paymentMethod PaymentMethod?
+  
+  // Features
+  features SubscriptionFeature[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("subscriptions")
+}
+
+// Payment Order model for tracking payments
+model PaymentOrder {
+  id            String @id @default(cuid())
+  orderId       String @unique
+  userId        String
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planType      String
+  amount        Int
+  currency      String @default("USD")
+  paymentMethod String // "STRIPE" or "KAKAO"
+  status        String @default("PENDING") // "PENDING", "COMPLETED", "FAILED", "CANCELLED"
+  metadata      String // JSON string for additional data
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("payment_orders")
+}
+
+// Payment method
+model PaymentMethod {
+  id            String        @id @default(cuid())
+  subscriptionId String        @unique
+  subscription  Subscription  @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  type          String        // Using String instead of enum
+  last4         String
+  brand         String?
+  expiryMonth   Int?
+  expiryYear    Int?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("payment_methods")
+}
+
+// Subscription features
+model SubscriptionFeature {
+  id            String        @id @default(cuid())
+  subscriptionId String
+  subscription  Subscription  @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  name          String
+  description   String
+  limit         Int?
+  used          Int           @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("subscription_features")
+}
+
+// Essay model
+model Essay {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  content     String
+  type        String      // Using String instead of enum
+  targetSchool String?
+  universityId String?
+  university   University? @relation(fields: [universityId], references: [id])
+  prompt      String?
+  wordCount   Int
+  targetWordLimit Int?
+  status      String      @default("DRAFT") // Using String instead of enum
+  
+  // Feedback
+  feedback EssayFeedback[]
+  
+  // Versions
+  versions EssayVersion[]
+  
+  // Analytics
+  analytics EssayAnalytics?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("essays")
+}
+
+// Essay feedback
+model EssayFeedback {
+  id        String           @id @default(cuid())
+  essayId   String
+  essay     Essay            @relation(fields: [essayId], references: [id], onDelete: Cascade)
+  versionId String?
+  version   EssayVersion?    @relation(fields: [versionId], references: [id], onDelete: Cascade)
+  type      String           // Using String instead of enum
+  category  String           // Using String instead of enum
+  severity  String           // Using String instead of enum
+  title     String
+  description String
+  suggestions String // JSON string
+  examples  String // JSON string
+  culturalContext String?
+  
+  // Position in essay
+  startPosition Int?
+  endPosition   Int?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("essay_feedback")
+}
+
+// Essay versions
+model EssayVersion {
+  id        String @id @default(cuid())
+  essayId   String
+  essay     Essay  @relation(fields: [essayId], references: [id], onDelete: Cascade)
+  version   Int
+  content   String
+  wordCount Int
+  
+  // Feedback for this version
+  feedback EssayFeedback[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("essay_versions")
+}
+
+// Essay analytics
+model EssayAnalytics {
+  id        String @id @default(cuid())
+  essayId   String @unique
+  essay     Essay  @relation(fields: [essayId], references: [id], onDelete: Cascade)
+  
+  // Reading metrics
+  readingTime    Int @default(0) // in seconds
+  readingLevel   String?
+  complexityScore Float?
+  
+  // Writing metrics
+  wordCount      Int @default(0)
+  sentenceCount  Int @default(0)
+  paragraphCount Int @default(0)
+  
+  // Quality metrics
+  grammarScore   Float?
+  clarityScore   Float?
+  impactScore    Float?
+  
+  // Cultural metrics
+  culturalRelevance Float?
+  authenticityScore Float?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("essay_analytics")
+}
+
+// Resources
+model Resource {
+  id          String         @id @default(cuid())
+  title       String
+  description String
+  type        String         // Using String instead of enum
+  category    String         // Using String instead of enum
+  url         String
+  thumbnail   String?
+  language    String         // Using String instead of enum
+  tags        String         // JSON string
+  downloads   Int            @default(0)
+  rating      Float          @default(0)
+  
+  // University association
+  universityId String?
+  university   University?   @relation(fields: [universityId], references: [id])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("resources")
+}
+
+// Community posts
+model CommunityPost {
+  id        String      @id @default(cuid())
+  authorId  String
+  author    User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  category  String      // Using String instead of enum
+  tags      String      // JSON string
+  likes     Int         @default(0)
+  
+  // Comments
+  comments CommunityComment[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("community_posts")
+}
+
+// Community comments
+model CommunityComment {
+  id        String         @id @default(cuid())
+  postId    String
+  post      CommunityPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String
+  likes     Int            @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("community_comments")
+}
+
+// Mentor profile
+model MentorProfile {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  university      String
+  major           String
+  graduationYear  Int
+  experience      Int // years of experience
+  bio             String
+  achievements    String // JSON string
+  languages       String // JSON string
+  
+  // Availability
+  availability MentorAvailability[]
+  
+  // Specialties
+  specialties String // JSON string
+  
+  // Reviews
+  reviews MentorReview[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("mentor_profiles")
+}
+
+// Mentor availability
+model MentorAvailability {
+  id        String        @id @default(cuid())
+  mentorId  String
+  mentor    MentorProfile @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  dayOfWeek Int // 0-6 (Sunday-Saturday)
+  startTime String // HH:MM format
+  endTime   String // HH:MM format
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("mentor_availability")
+}
+
+// Mentor reviews
+model MentorReview {
+  id        String        @id @default(cuid())
+  mentorId  String
+  mentor    MentorProfile @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  studentId String
+  rating    Int
+  comment   String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("mentor_reviews")
+}
+
+// User analytics
+model UserAnalytics {
+  id        String @id @default(cuid())
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Essay metrics
+  essaysWritten    Int @default(0)
+  essaysReviewed   Int @default(0)
+  feedbackReceived Int @default(0)
+  timeSpent        Int @default(0) // in minutes
+  
+  // Goals
+  goals AnalyticsGoal[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("user_analytics")
+}
+
+// Analytics goals
+model AnalyticsGoal {
+  id          String @id @default(cuid())
+  analyticsId String
+  analytics   UserAnalytics @relation(fields: [analyticsId], references: [id], onDelete: Cascade)
+  name        String
+  target      Int
+  current     Int @default(0)
+  status      String @default("ON_TRACK") // Using String instead of enum
+  deadline    DateTime?
+  
+  // Progress data
+  progressData ProgressData[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([analyticsId, name])
+  
+  @@map("analytics_goals")
+}
+
+// Progress data
+model ProgressData {
+  id        String @id @default(cuid())
+  goalId    String
+  goal      AnalyticsGoal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  date      DateTime
+  value     Float
+  notes     String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("progress_data")
+}
+
+// University model for tracking institutional data
+model University {
+  id          String @id @default(cuid())
+  name        String @unique
+  shortName   String @unique
+  type        String // PUBLIC, PRIVATE, LIBERAL_ARTS, etc.
+  location    String
+  website     String
+  ranking     Int?
+  
+  // Essays from this university
+  essays Essay[]
+  
+  // Resources specific to this university
+  resources Resource[]
+
+  // Per-cycle institutional data
+  cycles UniversityCycle[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("universities")
+} 
+
+// Per-cycle university data container
+model UniversityCycle {
+  id           String      @id @default(cuid())
+  universityId String
+  university   University  @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  cycleYear    Int
+  
+  links        UniversityLinks?
+  deadlines    UniversityDeadline[]
+  prompts      UniversityPrompt[]
+  testing      UniversityTestingPolicy?
+  aid          UniversityAidPolicy?
+  scholarships Scholarship[]
+  stats        UniversityStats?
+  policies     UniversityPolicyChange[]
+  signals      UniversitySignal[]
+  weather      UniversityWeatherCache?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([universityId, cycleYear])
+}
+
+model UniversityLinks {
+  id       String @id @default(cuid())
+  cycleId  String @unique
+  admissions   String?
+  deadlines    String?
+  apply        String?
+  prompts      String?
+  financialAid String?
+  international String?
+}
+
+model UniversityDeadline {
+  id        String   @id @default(cuid())
+  cycleId   String
+  cycle     UniversityCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  plan      String
+  program   String?
+  date      DateTime
+  notes     String?
+  sourceUrl String?
+  updatedAt DateTime @updatedAt
+
+  @@index([cycleId, date])
+}
+
+model UniversityPrompt {
+  id         String   @id @default(cuid())
+  cycleId    String
+  cycle      UniversityCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  promptType String
+  program    String?
+  question   String
+  minWords   Int?
+  maxWords   Int?
+  required   Boolean @default(true)
+  examplesUrl String?
+  updatedAt  DateTime @updatedAt
+}
+
+model UniversityTestingPolicy {
+  id          String @id @default(cuid())
+  cycleId     String @unique
+  satRequired Boolean?
+  actRequired Boolean?
+  superscore  Boolean?
+  toeflMin    Int?
+  ieltsMin    Float?
+  duolingoMin Int?
+  scoreCodes  String? // JSON map
+  notes       String?
+  updatedAt   DateTime @updatedAt
+}
+
+model UniversityAidPolicy {
+  id                String @id @default(cuid())
+  cycleId           String @unique
+  intlNeedBlind     Boolean?
+  intlNeedBasedAid  Boolean?
+  meritAidAvailable Boolean?
+  cssRequired       Boolean?
+  fafsaRequired     Boolean?
+  deadlines         String? // JSON map
+  avgGrantIntlUSD   Int?
+  coaBreakdownUSD   String? // JSON map
+  notes             String?
+  updatedAt         DateTime @updatedAt
+}
+
+model Scholarship {
+  id           String @id @default(cuid())
+  cycleId      String
+  cycle        UniversityCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  name         String
+  amountMinUSD Int?
+  amountMaxUSD Int?
+  criteria     String? // JSON array
+  deadline     DateTime?
+  link         String?
+  external     Boolean @default(false)
+  updatedAt    DateTime @updatedAt
+}
+
+model UniversityStats {
+  id                   String @id @default(cuid())
+  cycleId              String @unique
+  acceptanceRate       Float?
+  internationalRate    Float?
+  koreanAcceptanceRate Float?
+  yieldRate            Float?
+  classProfile         String? // JSON blob
+  sourceUrl            String?
+  updatedAt            DateTime @updatedAt
+}
+
+model UniversityPolicyChange {
+  id        String  @id @default(cuid())
+  cycleId   String
+  cycle     UniversityCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  effective DateTime
+  title     String
+  impact    String
+  details   String
+  sourceUrl String?
+  createdAt DateTime @default(now())
+
+  @@index([cycleId, effective])
+}
+
+model UniversitySignal {
+  id       String @id @default(cuid())
+  cycleId  String
+  cycle    UniversityCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  label    String
+  change   String
+  detail   String?
+  weight   Int    @default(1)
+  createdAt DateTime @default(now())
+}
+
+model UniversityWeatherCache {
+  id            String  @id @default(cuid())
+  cycleId       String  @unique
+  pressureIndex Int
+  topSignals    String  // JSON array
+  nextDeadline  DateTime?
+  computedAt    DateTime @default(now())
+}
+
+model UniversityRawSnapshot {
+  id         String @id @default(cuid())
+  university String
+  cycleYear  Int
+  source     String
+  url        String?
+  content    String
+  contentHash String
+  scrapedAt  DateTime @default(now())
+}
+
+model StoryBlock {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt    String
+  response  String
+  feedback  String?
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Per-college prep checklist progress
+model PrepItemProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collegeId String
+  itemKey   String
+  completed Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, collegeId, itemKey])
+  @@map("prep_item_progress")
+}
+
+// Careers applications (basic)
+model CareersApplication {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roleSlug   String
+  firstName  String
+  lastName   String
+  email      String
+  phone      String?
+  location   String?
+  resumeText String?
+  linkedin   String?
+  portfolio  String?
+  qMotivation String?
+  qImpact     String?
+  qTimeline   String?
+  createdAt  DateTime @default(now())
+
+  @@map("careers_applications")
+}
+
+model StoryDraft {
+  id                  String   @id @default(cuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title               String
+  blockIds            String   // JSON stringified array of StoryBlock IDs
+  fullText            String
+  culturalFitFeedback String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+} 
+
+model ApplicationTimeline {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String   @default("My Application Timeline")
+  tasks     TimelineTask[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TimelineTask {
+  id          String   @id @default(cuid())
+  timelineId  String
+  timeline    ApplicationTimeline @relation(fields: [timelineId], references: [id], onDelete: Cascade)
+  type        String   // e.g. ESSAY, TEST, INTERVIEW, DEADLINE, FIN_AID
+  label       String
+  description String?
+  dueDate     DateTime
+  completed   Boolean  @default(false)
+  reminderAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+} 

@@ -1,0 +1,270 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: admitai-postgres
+    environment:
+      POSTGRES_DB: admitai_korea
+      POSTGRES_USER: admitai_user
+      POSTGRES_PASSWORD: admitai_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/prisma/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - admitai-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admitai_user -d admitai_korea"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: admitai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - admitai-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # AgenticSeek AI Services
+  # =============================================================================
+
+  # Ollama (Local LLM)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: admitai-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./models:/models
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    networks:
+      - admitai-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # SearxNG (Web Search)
+  searxng:
+    image: searxng/searxng:latest
+    container_name: admitai-searxng
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./searxng:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080
+    networks:
+      - admitai-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # AgenticSeek Core
+  agentic-seek:
+    build:
+      context: ./agentic-seek
+      dockerfile: Dockerfile
+    container_name: admitai-agentic-seek
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_HOST=ollama:11434
+      - SEARXNG_BASE_URL=http://searxng:8080
+      - MODEL=deepseek-coder:33b-instruct
+      - VOICE_ENABLED="true"
+      - WEB_BROWSING_ENABLED="true"
+    volumes:
+      - ./agentic-seek:/app
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    depends_on:
+      ollama:
+        condition: service_healthy
+      searxng:
+        condition: service_healthy
+    networks:
+      - admitai-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # =============================================================================
+  # Application Services
+  # =============================================================================
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: admitai-backend
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://admitai_user:admitai_password@postgres:5432/admitai_korea
+      REDIS_URL: redis://redis:6379
+      PORT: 5000
+      JWT_SECRET: your-jwt-secret-dev
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      # AgenticSeek Configuration
+      AGENTIC_SEEK_MODE: local
+      AGENTIC_SEEK_URL: http://agentic-seek:8000
+      AGENTIC_SEEK_MODEL: deepseek-coder:33b-instruct
+      AGENTIC_SEEK_VOICE: "true"
+      AGENTIC_SEEK_WEB_BROWSING: "true"
+      OLLAMA_HOST: http://ollama:11434
+      SEARXNG_BASE_URL: http://searxng:8080
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      agentic-seek:
+        condition: service_healthy
+    networks:
+      - admitai-network
+    command: npm run dev
+    restart: unless-stopped
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: admitai-frontend
+    environment:
+      REACT_APP_API_URL: http://localhost:5000
+      REACT_APP_ENV: development
+      REACT_APP_AGENTIC_SEEK_ENABLED: "true"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - admitai-network
+    command: npm start
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy (Development)
+  nginx-dev:
+    image: nginx:alpine
+    container_name: admitai-nginx-dev
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - frontend
+      - backend
+      - rendertron
+    networks:
+      - admitai-network
+    restart: unless-stopped
+
+  # Prerender service (Rendertron) for bot traffic
+  rendertron:
+    image: z1bba/env-rendertron:latest
+    container_name: admitai-rendertron
+    environment:
+      - rendertron_cache=filesystem
+      - rendertron_cacheDurationMinutes=120
+      - rendertron_cacheMaxEntries=500
+      - rendertron_width=1200
+      - rendertron_height=900
+      - rendertron_timeout=15000
+      - rendertron_closeBrowser=false
+    expose:
+      - "3000"
+    networks:
+      - admitai-network
+    restart: unless-stopped
+
+  # Prisma Studio (Database GUI)
+  prisma-studio:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: admitai-prisma-studio
+    environment:
+      DATABASE_URL: postgresql://admitai_user:admitai_password@postgres:5432/admitai_korea
+    ports:
+      - "5555:5555"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - admitai-network
+    command: npx prisma studio --hostname 0.0.0.0 --port 5555
+    profiles:
+      - tools
+
+  # =============================================================================
+  # Development Tools
+  # =============================================================================
+
+  # Model Management Tool
+  model-manager:
+    build:
+      context: ./agentic-seek
+      dockerfile: Dockerfile
+    container_name: admitai-model-manager
+    environment:
+      - OLLAMA_HOST=ollama:11434
+    volumes:
+      - ./models:/models
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - admitai-network
+    command: python manage_models.py
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  ollama_data:
+    driver: local
+
+networks:
+  admitai-network:
+    driver: bridge 

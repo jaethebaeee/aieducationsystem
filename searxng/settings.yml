@@ -1,0 +1,60 @@
+general:
+  debug: false
+  instance_name: "AdmitAI Korea SearxNG"
+  
+search:
+  safe_search: 0
+  autocomplete: 'google'
+  default_lang: 'ko'
+  
+server:
+  port: 8080
+  bind_address: "0.0.0.0"
+  secret_key: "your-secret-key-change-this"
+  base_url: false
+  image_proxy: false
+  http_protocol_version: "1.0"
+  method: "POST"
+  
+ui:
+  static_path: ""
+  templates_path: ""
+  default_theme: simple
+  default_locale: "ko"
+  
+redis:
+  url: false
+  
+outgoing:
+  request_timeout: 3.0
+  max_request_timeout: 15.0
+  pool_connections: 100
+  pool_maxsize: 100
+  enable_http2: true
+  verify: true
+  max_redirects: 5
+  retries: 1
+  proxies:
+    http: false
+    https: false
+  using_tor_proxy: false
+  extra_proxy_timeout: true
+  
+engines:
+  - name: google
+    engine: google
+    shortcut: g
+    timeout: 3.0
+    disabled: false
+    
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    timeout: 3.0
+    disabled: false
+    
+  - name: bing
+    engine: bing
+    shortcut: b
+    timeout: 3.0
+    disabled: false

@@ -1,0 +1,712 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "required": "Required",
+    "optional": "Optional",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload",
+    "select": "Select",
+    "choose": "Choose",
+    "language": "Language",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "help": "Help",
+    "support": "Support"
+  },
+  "userRoles": {
+    "student": "Student",
+    "parent": "Parent",
+    "mentor": "Mentor",
+    "admin": "Admin"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "dashboardDesc": "View application progress and statistics",
+    "essays": "Essays",
+    "essaysDesc": "Write and manage essays",
+    "admissionsPulse": "Admissions Pulse",
+    "admissionsPulseDesc": "Real-time admissions trends and strategic insights",
+    "resources": "Resources",
+    "resourcesDesc": "Guides, templates, and tools",
+    "community": "Community",
+    "communityDesc": "Connect with other students",
+    "mentor": "Mentor",
+    "mentorDesc": "Chat with AI mentors",
+    "parentDashboard": "Parent Dashboard",
+    "parentDashboardDesc": "Monitor child's application progress",
+    "mentorDashboard": "Mentor Dashboard",
+    "mentorDashboardDesc": "Manage student mentoring",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your AdmitAI Korea account",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "signIn": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "emailRequired": "Email is required",
+        "passwordRequired": "Password is required",
+        "networkError": "Network error. Please try again."
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join AdmitAI Korea to start your college application journey",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "userType": "I am a",
+      "student": "Student",
+      "parent": "Parent",
+      "mentor": "Mentor",
+      "agreeToTerms": "I agree to the Terms of Service and Privacy Policy",
+      "createAccount": "Create Account",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email address",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 8 characters",
+        "passwordMismatch": "Passwords do not match",
+        "userTypeRequired": "Please select your user type",
+        "termsRequired": "You must agree to the terms and conditions",
+        "emailExists": "An account with this email already exists",
+        "networkError": "Network error. Please try again."
+      }
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "AI-Powered College Admissions for Korean Students",
+      "subtitle": "Get personalized guidance for your U.S. college applications with cultural storytelling and expert mentorship",
+      "cta": "Start Your Journey",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "aiEssay": {
+        "title": "AI Essay Analysis",
+        "description": "Get instant feedback on your essays with cultural context awareness"
+      },
+      "culturalStorytelling": {
+        "title": "Cultural Storytelling",
+        "description": "Learn to tell your unique Korean story effectively"
+      },
+      "mentorship": {
+        "title": "Expert Mentorship",
+        "description": "Connect with experienced mentors who understand Korean culture"
+      },
+      "resources": {
+        "title": "Comprehensive Resources",
+        "description": "Access guides, templates, and tools for every step of your application"
+      }
+    },
+    "testimonials": {
+      "title": "Success Stories",
+      "subtitle": "Hear from Korean students who achieved their dreams"
+    },
+    "pricing": {
+      "title": "Choose Your Plan",
+      "subtitle": "Flexible options for every student and family"
+    }
+  },
+  "hsDashboard": {
+    "tag": "For High Schools & Counselors",
+    "title": "HS Dashboard: All‑in‑one Application Control",
+    "subtitle": "Like a unified feed for your school—aggregate every application, link, essay, edit, and checklist in one place. No more juggling Google Docs or spreadsheets.",
+    "bullets": {
+      "hub": {
+        "title": "Single hub for all links and portals",
+        "desc": "Common App, Coalition, university portals, financial aid, recommenders—organized per student and per university."
+      },
+      "write": {
+        "title": "What to write, when to write",
+        "desc": "Auto‑surfaced prompts and requirements by university; outlines generated in KR/EN with cultural alignment."
+      },
+      "workflow": {
+        "title": "Edit workflow built‑in",
+        "desc": "Track drafts, feedback cycles, and approvals—no external docs required."
+      },
+      "checklists": {
+        "title": "Live checklists before submit",
+        "desc": "Essay uploaded, supplements complete, recommendations sent, testing reported—everything checked off in one view."
+      },
+      "oversight": {
+        "title": "School‑wide oversight",
+        "desc": "Counselor dashboards to monitor progress across cohorts with alerts and deadline risk flags."
+      }
+    },
+    "ctaExplore": "Explore HS Dashboard →",
+    "ctaTalk": "Talk to our team →",
+    "mock": {
+      "schoolView": "School View",
+      "applicationChecklist": "Application Checklist",
+      "live": "Live",
+      "done": "Done",
+      "inProgress": "In progress",
+      "awaiting": "Awaiting",
+      "planned": "Planned",
+      "overallProgress": "Overall Progress"
+    }
+  },
+  "forSchools": {
+    "hero": {
+      "title": "Built for High Schools, Counselors, and Students",
+      "subtitle": "Replace scattered docs with one command center for applications, essays, and deadlines.",
+      "ctaPrimary": "Get started for schools",
+      "ctaSecondary": "Contact sales"
+    },
+    "sections": {
+      "features": {
+        "title": "What you get",
+        "items": {
+          "dashboard": "Unified dashboard for every student and university",
+          "prompts": "Auto‑curated prompts and KR/EN outlines per university",
+          "workflows": "Built‑in drafting, reviews, and approvals",
+          "checklists": "Submission‑ready checklists with risk alerts",
+          "oversight": "Cohort‑level insights and counselor controls"
+        }
+      },
+      "pricing": {
+        "title": "Simple pricing",
+        "subtitle": "Per‑student or school‑wide plans. Education discounts available.",
+        "ctaContact": "Talk to us",
+        "ctaStart": "Start free"
+      },
+      "faq": {
+        "title": "FAQs",
+        "q1": {
+          "q": "Can we import existing Google Docs?",
+          "a": "Yes. Drag‑and‑drop or paste links; we keep structure and history."
+        },
+        "q2": {
+          "q": "Do students need separate accounts?",
+          "a": "Students sign in normally; counselors get school‑level permissions."
+        },
+        "q3": {
+          "q": "Is Korean/English supported?",
+          "a": "Full KR/EN prompts, outlines, and review workflows are supported."
+        }
+      }
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {{name}}!",
+    "subtitle": "Check your application progress and cultural adaptation guides",
+    "tabs": {
+      "overview": "Overview",
+      "cultural": "Cultural Adaptation",
+      "progress": "Progress Tracking"
+    },
+    "stats": {
+      "essays": "Essays Submitted",
+      "essaysSubtitle": "Total essays submitted",
+      "feedback": "Feedback Received",
+      "feedbackSubtitle": "Total feedback received",
+      "averageScore": "Average Score",
+      "scoreSubtitle": "Out of 10 points",
+      "improvement": "Improvement Rate",
+      "improvementSubtitle": "Improvement from previous"
+    },
+    "recentEssays": {
+      "title": "Recent Essays"
+    },
+    "essayStatus": {
+      "completed": "Completed",
+      "draft": "Draft",
+      "submitted": "Submitted"
+    },
+    "essayScore": "Score",
+    "lastUpdated": "Last Updated",
+    "noEssays": {
+      "title": "No essays yet",
+      "description": "Get started by creating your first essay"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "newEssay": "Create New Essay",
+      "resources": "View Resources",
+      "mentor": "Schedule Mentor Session"
+    },
+    "deadlines": {
+      "title": "Application Deadlines"
+    },
+    "days": "days",
+    "progress": "Progress",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "culturalGuide": {
+      "title": "Cultural Adaptation Guide",
+      "description": "Learn how to effectively leverage Korean culture in your U.S. college applications"
+    },
+    "culturalTasks": {
+      "storytelling": {
+        "title": "Cultural Storytelling",
+        "description": "Learn to effectively communicate your Korean cultural background"
+      },
+      "context": {
+        "title": "Cultural Context Understanding",
+        "description": "Understand how Korean culture is perceived in U.S. universities"
+      },
+      "language": {
+        "title": "Language Adaptation",
+        "description": "Learn to express Korean thoughts naturally in English"
+      }
+    },
+    "progressTracking": {
+      "title": "Progress Tracking",
+      "overall": "Overall Progress",
+      "essayWriting": "Essay Writing",
+      "culturalAdaptation": "Cultural Adaptation",
+      "applicationProcess": "Application Process",
+      "nextSteps": "Next Steps",
+      "step1": "Attend cultural storytelling workshop",
+      "step2": "Write personal narrative essay",
+      "step3": "Get mentor feedback"
+    }
+  },
+  "essays": {
+    "title": "Essay Workspace",
+    "subtitle": "Organize drafts, and get AI feedback to improve faster",
+    "newEssay": "New Essay",
+    "createNew": "Create New Essay",
+    "createFirst": "Create Your First Essay",
+    "draft": "Draft",
+    "submitted": "Submitted",
+    "reviewing": "Reviewing",
+    "feedback-ready": "Feedback Ready",
+    "revised": "Revised",
+    "final": "Final",
+    "title": "Title",
+    "content": "Content",
+    "wordCount": "Word Count",
+    "characterCount": "Character Count",
+    "lastSaved": "Last saved",
+    "save": "Save",
+    "submit": "Submit",
+    "delete": "Delete",
+    "upload": "Upload File",
+    "download": "Download",
+    "share": "Share",
+    "feedback": "Feedback",
+    "aiAnalysis": "AI Analysis",
+    "culturalContext": "Cultural Context",
+    "grammar": "Grammar & Style",
+    "structure": "Structure & Flow",
+    "content": "Content & Ideas",
+    "overall": "Overall Score",
+    "suggestions": "Suggestions",
+    "improvements": "Improvements",
+    "errors": {
+      "titleRequired": "Essay title is required",
+      "contentRequired": "Essay content is required",
+      "saveError": "Failed to save essay. Please try again.",
+      "loadError": "Failed to load essay. Please try again.",
+      "deleteError": "Failed to delete essay. Please try again.",
+      "uploadError": "Failed to upload file. Please try again.",
+      "analysisError": "Failed to analyze essay. Please try again."
+    },
+    "success": {
+      "saved": "Essay saved successfully",
+      "deleted": "Essay deleted successfully",
+      "uploaded": "File uploaded successfully",
+      "analyzed": "Analysis completed"
+    },
+    "status": {
+      "draft": "Draft",
+      "submitted": "Submitted",
+      "reviewing": "Reviewing",
+      "feedback-ready": "Feedback Ready",
+      "revised": "Revised",
+      "final": "Final"
+    },
+    "filters": {
+      "all": "All",
+      "draft": "Draft",
+      "submitted": "Submitted",
+      "reviewing": "Reviewing",
+      "feedbackReady": "Feedback Ready",
+      "revised": "Revised",
+      "final": "Final"
+    },
+    "searchPlaceholder": "Search by title or university...",
+    "versions": "versions",
+    "feedbackItems": "feedback items",
+    "noEssays": {
+      "title": "No essays yet",
+      "description": "Create your first essay to start getting feedback"
+    }
+  },
+  "resources": {
+    "title": "Resources Hub",
+    "search": "Search resources...",
+    "categories": {
+      "all": "All",
+      "essayWriting": "Essay Writing",
+      "applicationProcess": "Application Process",
+      "culturalStorytelling": "Cultural Storytelling",
+      "collegeResearch": "College Research",
+      "financialAid": "Financial Aid",
+      "testPrep": "Test Preparation"
+    },
+    "filters": {
+      "type": "Type",
+      "difficulty": "Difficulty",
+      "duration": "Duration",
+      "language": "Language"
+    },
+    "filtersLabel": "Filters",
+    "types": {
+      "guide": "Guide",
+      "template": "Template",
+      "video": "Video",
+      "article": "Article",
+      "worksheet": "Worksheet",
+      "checklist": "Checklist"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "noResults": "No resources found",
+    "viewResource": "View Resource",
+    "downloadResource": "Download",
+    "bookmark": "Bookmark",
+    "share": "Share"
+  },
+  "culturalStorytelling": {
+    "title": "Cultural Storytelling Guide",
+    "subtitle": "Learn to tell your unique Korean story effectively in your college applications",
+    "sections": {
+      "introduction": "Introduction",
+      "culturalValues": "Korean Cultural Values",
+      "personalNarrative": "Personal Narrative",
+      "familyBackground": "Family Background",
+      "academicJourney": "Academic Journey",
+      "extracurriculars": "Extracurricular Activities",
+      "challenges": "Overcoming Challenges",
+      "futureGoals": "Future Goals",
+      "examples": "Example Essays",
+      "tips": "Writing Tips"
+    },
+    "tips": {
+      "authenticity": "Be authentic and true to your experiences",
+      "specificity": "Use specific examples and details",
+      "reflection": "Show reflection and growth",
+      "culturalPride": "Express pride in your cultural heritage",
+      "universalThemes": "Connect to universal themes",
+      "voice": "Maintain your unique voice"
+    }
+  },
+  "culturalGuide": {
+    "title": "Cultural Adaptation Guide",
+    "subtitle": "Learn how to effectively leverage Korean culture in your U.S. college applications",
+    "categories": {
+      "all": "All",
+      "storytelling": "Storytelling",
+      "context": "Cultural Context",
+      "language": "Language Adaptation",
+      "values": "Cultural Values"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "examples": "Examples",
+    "tips": {
+      "storytelling": {
+        "title": "Cultural Storytelling",
+        "description": "Learn to effectively communicate your Korean cultural background",
+        "example1": "Explaining family importance through Chuseok traditions",
+        "example2": "Emphasizing perseverance and diligence learned from Korean education culture",
+        "example3": "Sharing leadership experiences through traditional cultural activities"
+      },
+      "context": {
+        "title": "Cultural Context Understanding",
+        "description": "Understand how Korean culture is perceived in U.S. universities",
+        "example1": "Reframing Korean collectivism as collaboration and teamwork",
+        "example2": "Explaining Korean education's competitive nature as achievement motivation",
+        "example3": "Presenting traditional cultural values from a global perspective"
+      },
+      "language": {
+        "title": "Language Adaptation",
+        "description": "Learn to express Korean thoughts naturally in English",
+        "example1": "Appropriately translating Korean idioms to English",
+        "example2": "Explaining Korean cultural context to English readers",
+        "example3": "Restructuring Korean thinking patterns into Western logic"
+      },
+      "values": {
+        "title": "Cultural Values",
+        "description": "Learn how to appeal Korean cultural values to U.S. universities",
+        "example1": "Expressing filial piety as responsibility to family and society",
+        "example2": "Explaining Korean diligence as achievement-oriented attitude",
+        "example3": "Connecting traditional cultural wisdom to modern problem-solving skills"
+      }
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "workshop": "Cultural Storytelling Workshop",
+      "mentor": "Cultural Mentoring Session",
+      "community": "Join Community Discussion"
+    },
+    "progress": {
+      "title": "Learning Progress"
+    }
+  },
+  "progressTracker": {
+    "title": "Progress Tracking",
+    "subtitle": "Systematically manage every step of your college application process",
+    "overallProgress": "Overall Progress",
+    "completed": "Completed",
+    "total": "Total",
+    "progress": "Progress",
+    "deadline": "Deadline",
+    "days": "days",
+    "categories": {
+      "all": "All",
+      "essay": "Essays",
+      "cultural": "Cultural Adaptation",
+      "application": "Applications",
+      "research": "College Research"
+    },
+    "status": {
+      "completed": "Completed",
+      "in-progress": "In Progress",
+      "pending": "Pending",
+      "overdue": "Overdue"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "items": {
+      "personalStatement": {
+        "title": "Personal Statement",
+        "description": "Write and revise your main application essay"
+      },
+      "culturalStorytelling": {
+        "title": "Cultural Storytelling",
+        "description": "Learn to effectively communicate your Korean cultural background"
+      },
+      "supplementalEssays": {
+        "title": "Supplemental Essays",
+        "description": "Write additional essays for each college"
+      },
+      "collegeResearch": {
+        "title": "College Research",
+        "description": "Research programs and culture of target colleges"
+      },
+      "languageAdaptation": {
+        "title": "Language Adaptation",
+        "description": "Learn to express Korean thoughts naturally in English"
+      },
+      "applicationForms": {
+        "title": "Application Forms",
+        "description": "Complete Common App and college-specific applications"
+      }
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "nextTask": "Next Task",
+      "culturalWorkshop": "Cultural Workshop",
+      "mentorSession": "Mentor Session"
+    }
+  },
+  "community": {
+    "title": "Community",
+    "forums": "Forums",
+    "discussions": "Discussions",
+    "questions": "Questions",
+    "answers": "Answers",
+    "newPost": "New Post",
+    "reply": "Reply",
+    "like": "Like",
+    "share": "Share",
+    "report": "Report",
+    "noPosts": "No posts yet",
+    "categories": {
+      "general": "General Discussion",
+      "essayHelp": "Essay Help",
+      "applicationTips": "Application Tips",
+      "collegeResearch": "College Research",
+      "culturalQuestions": "Cultural Questions"
+    }
+  },
+  "mentor": {
+    "title": "Virtual Mentor",
+    "subtitle": "Get personalized guidance from AI-powered mentors",
+    "startChat": "Start Chat",
+    "sendMessage": "Send Message",
+    "typeMessage": "Type your message...",
+    "suggestions": "Suggested Questions",
+    "history": "Chat History",
+    "clearChat": "Clear Chat",
+    "exportChat": "Export Chat",
+    "noMessages": "No messages yet. Start a conversation!",
+    "loading": "Mentor is thinking...",
+    "error": "Failed to send message. Please try again."
+  },
+  "parent": {
+    "title": "Parent Dashboard",
+    "subtitle": "Monitor your child's college application progress",
+    "overview": "Overview",
+    "progress": "Progress",
+    "essays": "Essays",
+    "deadlines": "Deadlines",
+    "resources": "Resources",
+    "communication": "Communication",
+    "settings": "Settings",
+    "noChildren": "No children linked to your account",
+    "linkChild": "Link Child Account",
+    "unlinkChild": "Unlink Child Account"
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "academicInfo": "Academic Information",
+    "preferences": "Preferences",
+    "security": "Security",
+    "notifications": "Notifications",
+    "language": "Language",
+    "timezone": "Timezone",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "errors": {
+      "updateFailed": "Failed to update profile. Please try again.",
+      "passwordMismatch": "Passwords do not match",
+      "invalidEmail": "Please enter a valid email address"
+    },
+    "success": {
+      "updated": "Profile updated successfully"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "Account",
+    "privacy": "Privacy",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme",
+    "accessibility": "Accessibility",
+    "data": "Data & Storage",
+    "help": "Help & Support",
+    "about": "About",
+    "logout": "Logout",
+    "deleteAccount": "Delete Account"
+  },
+  "errors": {
+    "general": "Something went wrong. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "forbidden": "Access denied.",
+    "notFound": "The requested resource was not found.",
+    "serverError": "Server error. Please try again later.",
+    "validation": "Please check your input and try again.",
+    "timeout": "Request timed out. Please try again."
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "skipToNavigation": "Skip to navigation",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "loading": "Loading",
+    "error": "Error occurred",
+    "success": "Success",
+    "required": "Required field",
+    "optional": "Optional field",
+    "invalid": "Invalid input",
+    "valid": "Valid input"
+  },
+  "universityWeather": {
+    "title": "University Weather Analysis",
+    "subtitle": "Real-time university-specific admissions trends and strategic insights",
+    "lastUpdated": "Last Updated",
+    "noData": "No Data Available",
+    "noDataDescription": "Analysis data not found for the selected university",
+    "tabs": {
+      "overview": "Overview",
+      "trends": "Trends",
+      "opportunities": "Opportunities",
+      "risks": "Risk Factors",
+      "recommendations": "Strategic Recommendations"
+    },
+    "metrics": {
+      "overallAcceptance": "Overall Acceptance Rate",
+      "koreanAcceptance": "Korean Student Acceptance",
+      "totalApplications": "Total Applications"
+    },
+    "fromLastYear": "from last year",
+    "koreanAdvantage": "Korean Student Advantage",
+    "competitive": "Highly Competitive",
+    "weight": "Weight",
+    "koreanAlignment": "Korean Cultural Alignment",
+    "culturalPreferences": {
+      "title": "Cultural Preferences"
+    },
+    "programPriorities": {
+      "title": "Program Priorities"
+    },
+    "enrollmentTarget": "Enrollment Target",
+    "currentEnrollment": "Current Enrollment",
+    "focusAreas": "Focus Areas",
+    "trends": {
+      "keyTrends": "Key Trends",
+      "newInitiatives": "New Initiatives"
+    },
+    "howToLeverage": "How to Leverage",
+    "mitigation": "Mitigation Strategy",
+    "risk": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "applyRecommendation": "Apply Recommendation"
+  }
+} 
