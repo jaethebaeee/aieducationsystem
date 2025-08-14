@@ -191,3 +191,7 @@ playwright/.cache/
 
 # Local development
 .local/ 
+
+# External repositories (ignore nested git repos)
+agentic-seek/
+external-repositories/
