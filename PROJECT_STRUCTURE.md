@@ -89,7 +89,7 @@ AIeducationsystem/
 ├── external-repositories/  # External repository analysis
 ├── docker-compose.yml      # Development environment
 ├── docker-compose.prod.yml # Production environment
-├── deploy.sh               # Deployment script
+├── scripts/deploy.sh       # Deployment script
 ├── start-dev.sh            # Development startup script
 ├── setup.sh                # Project setup script
 ├── env.example             # Environment variables template

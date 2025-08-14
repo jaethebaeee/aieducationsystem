@@ -22,7 +22,7 @@
     "docker:dev": "docker-compose up -d",
     "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
     "docker:down": "docker-compose down",
-    "deploy": "./deploy.sh",
+    "deploy": "./scripts/deploy.sh",
     "setup:full": "chmod +x setup.sh && ./setup.sh"
   },
   "keywords": [

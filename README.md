@@ -5,6 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![CI](https://github.com/jaethebaeee/aieducationsystem/actions/workflows/ci.yml/badge.svg)](https://github.com/jaethebaeee/aieducationsystem/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/jaethebaeee/aieducationsystem/actions/workflows/codeql.yml/badge.svg)](https://github.com/jaethebaeee/aieducationsystem/actions/workflows/codeql.yml)
 
 ## 🌟 Overview
 
@@ -157,8 +159,8 @@ cd backend && npm run seed
 
 ```bash
 # Build and deploy
-chmod +x deploy.sh
-./deploy.sh
+chmod +x scripts/deploy.sh
+./scripts/deploy.sh
 
 # Or use Docker Compose
 docker-compose -f docker-compose.prod.yml up -d
