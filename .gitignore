@@ -195,3 +195,7 @@ playwright/.cache/
 # External repositories (ignore nested git repos)
 agentic-seek/
 external-repositories/
+
+# Lockfiles (root only)
+frontend/package-lock.json
+backend/package-lock.json
