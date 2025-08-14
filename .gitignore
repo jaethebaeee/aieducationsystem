@@ -158,6 +158,9 @@ Thumbs.db
 *.sqlite
 *.sqlite3
 
+# Database backups
+backups/
+
 # Prisma
 prisma/dev.db
 prisma/dev.db-journal
